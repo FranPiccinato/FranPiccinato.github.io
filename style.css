@@ -6,16 +6,17 @@
 
 
 
+
+@media (max-width: 375px) {
+
+    h1{
+        color: blue;
+    }
+}
+
 @media (max-width: 1440px) {
 
     h1{
         color: red;
-    }
-}
-
-@media (min-width: 375px) {
-
-    h1{
-        color: blue;
     }
 }
