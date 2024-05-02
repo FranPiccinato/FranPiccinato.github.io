@@ -1,0 +1,21 @@
+
+
+
+
+
+
+
+
+@media (max-width: 1440px) {
+
+    h1{
+        color: red;
+    }
+}
+
+@media (max-width: 375px) {
+
+    h1{
+        color: blue;
+    }
+}
