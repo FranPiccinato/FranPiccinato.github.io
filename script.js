@@ -19,6 +19,7 @@ function modeChange(){
     }else{
         icon.src = 'images/icon-moon.svg';
     }
+    console.log(icon.src);
 }
 
 buttonState.addEventListener('click', modeChange);
