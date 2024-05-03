@@ -17,11 +17,22 @@ body{
     display: grid ;
     justify-content: center;
     align-items: center;
-    margin-top: 0x;
+    margin-top: 70px;
+}
+
+#todoDiv{
+    width: 700px;
+    text-align: center;
 }
 
 
 /* Container TODO */
+
+#containerTodo{
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-between;
+}
 
 #TODO{
     color:hsl(0, 0%, 98%);
@@ -31,19 +42,12 @@ body{
     width: fit-content;
 }
 
-#containerTodo{
-    display: flex;
-    display: -webkit-flex;
-    column-gap: 50%;
-}
-
 /* New TODO */
 #containerNewTodo{
     background-color: hsl(0, 0%, 98%);
     padding: 15px;
     border-radius: 8px;
     display: flex;
-    column-gap: 20px;
     margin-bottom: 25px;
 }
 
@@ -66,14 +70,16 @@ body{
     border-style: solid;
     border-width: 2px;
     cursor:pointer;
+    background-color: white;
+    margin-right: 20px;
 }
 
 .btn-check:hover{
-  border:2px solid transparent;
-  border-radius:50px;
-  background:
-    linear-gradient(white, white) padding-box,
-    linear-gradient( hsl(192, 100%, 67%) ,hsl(280, 87%, 65%)) border-box;
+    border:2px solid transparent;
+    border-radius:50px;
+    background:
+      linear-gradient(white, white) padding-box,
+      linear-gradient( hsl(192, 100%, 67%) ,hsl(280, 87%, 65%)) border-box;
 
 }
 
@@ -81,8 +87,51 @@ body{
 
 #containerList{
     background-color: hsl(0, 0%, 98%);
-    padding: 15px;
-    border-radius: 8px;
+    padding: 18px;
+    border-radius: 8px 8px 3px 3px;
+    box-shadow: 0 3px 3px 0 hsl(236, 33%, 92%);
+    text-align: left;
+
+}
+
+#todoList{
+    list-style-type: none;
+    margin: 0;
+    padding: 0px;
+}
+
+/* Filters */
+
+#containerFilter{
+    background-color: hsl(0, 0%, 98%);
+    padding: 8px;
+    border-radius: 3px 3px 8px 8px;
+    box-shadow: 0 4px 8px 0 hsl(236, 33%, 92%), 0 6px 20px 0 hsl(236, 33%, 92%);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#containerFilter button, #containerFilter p{
+    font-size: 15px;
+    color:hsl(236, 9%, 61%);
+}
+
+#centerFilters{
+    justify-content: space-evenly;
+}
+
+#nItems{
+    margin-right: 120px;
+}
+
+#btn-clear{
+    margin-left: 80px;
+}
+
+#btn-clear:hover, #btn-all:hover, #btn-active:hover, #btn-completed:hover{
+   color:hsl(235, 19%, 35%);
 }
 
 /* Buttons */
@@ -91,9 +140,14 @@ body{
     background-color: transparent;
     border: none;
     cursor: pointer;
+    padding: 0px;
 }
 
-
+#drNdr{
+    margin-top: 40px;
+    font-size: 15px;
+    color:hsl(236, 9%, 61%);
+}
 #footer{
     position:absolute;
     bottom:0;
@@ -102,23 +156,35 @@ body{
 
 @media (max-width: 1920px) {
 
-   background-size: contain;
+   body{
+    background-repeat: repeat-x;
+   }
+  
+   #todoDiv{
+        width: 700px;
+    }
 
 }
 
 
 @media (max-width: 1440px){
+    #todoDiv{
+        width: 600px;
+    }
 
-   
 }
 
 
 @media (max-width: 575px) {
+    #todoDiv{
+        width: 400px;
+    }
 
 }
 
 @media (max-width: 375px) {
-
-
+    #todoDiv{
+        width: 400px;
+    }
 
 }

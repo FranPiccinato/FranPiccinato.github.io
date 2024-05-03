@@ -1,56 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  
+
   <title>Frontend Mentor | Todo app</title>
 
 </head>
+
 <body>
   <div class="centerDiv">
-    <div id="containerTodo">
-      <h1 id="TODO">TODO</h1>
-      <button id="btn-state" class="clear">
-        <img src="images/icon-moon.svg">
-      </button>
-    </div>
-  
-    <div id="containerNewTodo">
-      <div class="btn-check"></div>
-      <input type="text" name="newTodo" id="newTodo" placeholder="Create a new todo...">
-    </div>
+    <div id="todoDiv">
+      <div id="containerTodo">
+        <h1 id="TODO">TODO</h1>
+        <button id="btn-state" class="clear">
+          <img src="images/icon-moon.svg">
+        </button>
+      </div>
 
-    <div id="containerList">
-      <ul id="todoList">
-        <li>
-          <button class="btn-check"></button>
-          A todo...
-        </li>
+      <div id="containerNewTodo">
+        <div class="btn-check"></div>
+        <input type="text" name="newTodo" id="newTodo" placeholder="Create a new todo...">
+      </div>
 
-        <div id="containerFilter">
-          <p>- items</p>
+      <div id="containerList">
+        <ul id="todoList">
+          <li>
+            <button class="btn-check"></button>
+            A todo...
+          </li>
+        </ul>
+      </div>
+      <div id="containerFilter">
+        <p id="nItems">- items</p>
+        <div id="centerFilters">
           <button id="btn-all" class="clear">All</button>
           <button id="btn-active" class="clear">Active</button>
           <button id="btn-completed" class="clear">Completed</button>
-          <button id="btn-clear" class="clear">Clear Completed</button>
         </div>
-      </ul>
-
-      <p>Drag and drop to reorder list</p>
+        <button id="btn-clear" class="clear">Clear Completed</button>
+      </div>
+      <p id="drNdr">Drag and drop to reorder list</p>
     </div>
   </div>
-    <div  id="footer">
-        <div class="attribution">
-          Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-          Coded by <a href="https://github.com/FranPiccinato" target="_blank">Francesca Piccinato</a>.
-        </div>
+  <div id="footer">
+    <div class="attribution">
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+      Coded by <a href="https://github.com/FranPiccinato" target="_blank">Francesca Piccinato</a>.
     </div>
+  </div>
 </body>
+
 </html>
