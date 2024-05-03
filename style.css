@@ -83,6 +83,7 @@ body{
 
 }
 
+
 /* Todo List */
 
 #containerList{
@@ -98,6 +99,35 @@ body{
     list-style-type: none;
     margin: 0;
     padding: 0px;
+
+}
+
+#todoList li{
+    display: flex;
+    align-items: center;
+}
+
+#todoList p{
+    margin: 0px;
+}
+
+.checked{
+    border:2px solid transparent;
+    border-radius:50px;
+    background:
+      linear-gradient( hsl(192, 100%, 67%) ,hsl(280, 87%, 65%))  padding-box,
+      linear-gradient( hsl(192, 100%, 67%) ,hsl(280, 87%, 65%)) border-box;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.checked:hover{
+    border:2px solid transparent;
+    border-radius:50px;
+    background:
+      linear-gradient( hsl(192, 100%, 67%) ,hsl(280, 87%, 65%))  padding-box,
+      linear-gradient( hsl(192, 100%, 67%) ,hsl(280, 87%, 65%)) border-box;
 }
 
 /* Filters */
