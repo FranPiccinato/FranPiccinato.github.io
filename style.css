@@ -192,6 +192,9 @@ body{
     display: none;
 }
 
+.checkedLi{
+    text-decoration: line-through;
+}
 
 #todoList p{
     margin: 0px;

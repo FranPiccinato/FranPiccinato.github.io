@@ -1,39 +1,37 @@
 "use strict"
 
-var todoList = document.querySelectorAll('.btn-check');
-var check = document.querySelector('.imgCheck');
+var checked = document.querySelector('.btn-check');
 
-todoList.forEach(todo => {
-    todo.addEventListener('click', () => {
-        todo.classList.toggle('checked');
-    });
+checked.addEventListener('click', () => {
+    checked.classList.toggle('checked');
 });
 
 
 var buttonState = document.querySelector('#btn-state');
-var icon = document.querySelector('#img-state');
-var body = document.body;
-var containerNew = document.querySelector('#containerNewTodo');
-var containerList = document.querySelector('#containerList');
-var containerFilter = document.querySelector('#containerFilter');
-var attri = document.querySelector(".attribution");
-var li = document.querySelectorAll("li");
-var input = document.querySelector("input");
-var btnAc = document.querySelector("#btn-active");
-var btnAll = document.querySelector("#btn-all");
-var btnCom = document.querySelector("#btn-completed");
-var btnCl = document.querySelector("#btn-clear");
 
 function modeChange() {
+    var icon = document.querySelector('#img-state');
+    var body = document.body;
+    var containerNew = document.querySelector('#containerNewTodo');
+    var containerList = document.querySelector('#containerList');
+    var containerFilter = document.querySelector('#containerFilter');
+    var attri = document.querySelector(".attribution");
+    var li = document.querySelectorAll("li");
+    var input = document.querySelector("input");
+    var btnAc = document.querySelector("#btn-active");
+    var btnAll = document.querySelector("#btn-all");
+    var btnCom = document.querySelector("#btn-completed");
+    var btnCl = document.querySelector("#btn-clear");
+
     const img = icon.src;
     const imageName = img.match(/\w+(?=\.svg$)/)[0];
     var btnCh = document.querySelectorAll('.btn-check');
 
     if (imageName == 'moon') {
         icon.src = 'images/icon-sun.svg';
-       
+
         body.classList.add("bodyDark");
-        
+
         containerNew.classList.add("DarkNewTodo");
         containerNew.classList.remove("lightNewTodo");
 
@@ -70,7 +68,7 @@ function modeChange() {
     } else {
         icon.src = 'images/icon-moon.svg';
         body.classList.remove("bodyDark");
-        
+
         containerNew.classList.remove("DarkNewTodo");
         containerNew.classList.add("lightNewTodo");
 
@@ -108,3 +106,37 @@ function modeChange() {
 }
 
 buttonState.addEventListener('click', modeChange);
+
+
+var submit = document.getElementById("newTodo");
+var todoList = document.getElementById("todoList");
+
+submit.addEventListener("keydown", function (e) {
+
+    if (e.key === "Enter") {
+        if (submit.value === '') {
+            alert("Vacío");
+        } else {
+            todoList.innerHTML += `
+            <li class="lightLine">
+            <div class="btn-check btn-checkLight"">
+              <img class="imgCheck" src="images/icon-check.svg">
+            </div>
+            ${submit.value}
+            <div id="cross" class="hide">
+              <img class="imgCross" src="images/icon-cross.svg">
+            </div>
+          </li>
+            `
+
+            submit.value = "";
+        }
+    }
+});
+
+todoList.addEventListener("click", (e) =>{
+    console.log(e.target.className)
+    if(e.target.className.match("btn-check")){
+        e.target.classList.toggle("checked");
+    }
+});
