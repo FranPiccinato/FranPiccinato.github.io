@@ -123,7 +123,6 @@ body{
 /* Todo List */
 
 #containerList{
-    padding: 18px;
     border-radius: 8px 8px 3px 3px;
     text-align: left;
 
@@ -164,6 +163,15 @@ body{
 #todoList li{
     display: flex;
     align-items: center;
+    padding: 20px 18px 18px 18px;
+}
+
+.lightLine{
+    border-bottom: 1px solid hsl(236, 33%, 92%);
+}
+
+.darkLine{
+    border-bottom: 1px solid hsl(234, 11%, 52%);
 }
 
 .hide{
@@ -175,6 +183,7 @@ body{
 #todoList p{
     margin: 0px;
 }
+
 
 .checked{
     border:2px solid transparent;

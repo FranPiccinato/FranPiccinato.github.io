@@ -2,15 +2,10 @@
 
 var todoList = document.querySelectorAll('.btn-check');
 var check = document.querySelector('.imgCheck');
-var li = document.querySelectorAll('li');
 
 todoList.forEach(todo => {
     todo.addEventListener('click', () => {
         todo.classList.toggle('checked');
-        li.forEach(l => {
-            l.classList.toggle('line');
-
-        });
     });
 });
 
@@ -22,6 +17,7 @@ var containerNew = document.querySelector('#containerNewTodo');
 var containerList = document.querySelector('#containerList');
 var containerFilter = document.querySelector('#containerFilter');
 var attri = document.querySelector(".attribution");
+var li = document.querySelectorAll("li");
 
 function modeChange() {
     const img = icon.src;
@@ -49,6 +45,11 @@ function modeChange() {
 
         attri.classList.add("footerDark");
         attri.classList.remove("footerLight");
+
+        li.forEach(item => {
+            item.classList.add("darkLine");
+            item.classList.remove("lightLine");
+        });
     } else {
         icon.src = 'images/icon-moon.svg';
         body.classList.remove("bodyDark");
@@ -69,6 +70,11 @@ function modeChange() {
 
         attri.classList.add("footerLight");
         attri.classList.remove("footerDark");
+
+        li.forEach(item => {
+            item.classList.add("lightLine");
+            item.classList.remove("darkLine");
+        });
     }
 }
 
