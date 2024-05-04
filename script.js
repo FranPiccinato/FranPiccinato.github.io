@@ -1,9 +1,11 @@
 "use strict"
 
 var checked = document.querySelector('.btn-check');
+var input = document.querySelector('#newTodo');
 
 checked.addEventListener('click', () => {
     checked.classList.toggle('checked');
+    input.classList.toggle('marked');
 });
 
 
@@ -134,9 +136,11 @@ submit.addEventListener("keydown", function (e) {
     }
 });
 
-todoList.addEventListener("click", (e) =>{
-    console.log(e.target.className)
+var contList = document.querySelector("#containerList")
+contList.addEventListener("click", (e) =>{
     if(e.target.className.match("btn-check")){
         e.target.classList.toggle("checked");
+        e.target.parentElement.classList.toggle('marked');
     }
 });
+
