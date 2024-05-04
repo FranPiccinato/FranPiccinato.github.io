@@ -13,6 +13,14 @@ body{
     font-weight: 400;
 }
 
+.bodyDark{
+    background-image: url(images/bg-desktop-dark.jpg);
+    background-color: hsl(235, 21%, 11%);
+    background-repeat: no-repeat;
+    background-position: top;
+    font-weight: 400;
+}
+
 .centerDiv{
     display: grid ;
     justify-content: center;
@@ -44,11 +52,18 @@ body{
 
 /* New TODO */
 #containerNewTodo{
-    background-color: hsl(0, 0%, 98%);
     padding: 15px;
     border-radius: 8px;
     display: flex;
     margin-bottom: 25px;
+}
+
+.lightNewTodo{
+    background-color: hsl(0, 0%, 98%);
+}
+
+.DarkNewTodo{
+    background-color:hsl(235, 24%, 19%);
 }
 
 #newTodo{
@@ -66,33 +81,71 @@ body{
     height: 25px;
     width: 25px;
     border-radius: 50%;
-    border-color: hsl(236, 33%, 92%);
     border-style: solid;
     border-width: 2px;
     cursor:pointer;
-    background-color: white;
     margin-right: 20px;
+}
+
+.btn-checkLight{
+    border-color: hsl(236, 33%, 92%);
+    background-color: white;
+
+}
+
+.btn-checkDark{
+    border-color:hsl(234, 11%, 52%);
+    background-color: hsl(235, 24%, 19%);
 }
 
 .btn-check:hover{
     border:2px solid transparent;
     border-radius:50px;
     background:
-      linear-gradient(white, white) padding-box,
+      linear-gradient(hsl(0, 0%, 98%), hsl(0, 0%, 98%)) padding-box,
       linear-gradient( hsl(192, 100%, 67%) ,hsl(280, 87%, 65%)) border-box;
 
+}
+
+.btn-checkDark:hover{
+    border:2px solid transparent;
+    border-radius:50px;
+    background:
+      linear-gradient(hsl(235, 24%, 19%), hsl(235, 24%, 19%)) padding-box,
+      linear-gradient( hsl(192, 100%, 67%) ,hsl(280, 87%, 65%)) border-box;
+}
+
+.imgCheck{
+    opacity: 0;
 }
 
 
 /* Todo List */
 
 #containerList{
-    background-color: hsl(0, 0%, 98%);
     padding: 18px;
     border-radius: 8px 8px 3px 3px;
-    box-shadow: 0 3px 3px 0 hsl(236, 33%, 92%);
     text-align: left;
 
+}
+
+.containerListLight{
+    background-color: hsl(0, 0%, 98%);
+    box-shadow: 0 3px 3px 0 hsl(234, 11%, 52%);
+}
+
+.containerListLight li{
+    color: hsl(235, 19%, 35%);
+}
+
+
+.containerListDark{
+    background-color: hsl(235, 24%, 19%);
+    box-shadow: 0 3px 3px 0 hsl(234, 11%, 52%);
+}
+
+.containerListDark li{
+    color: hsl(234, 39%, 85%);
 }
 
 #todoList{
@@ -102,10 +155,22 @@ body{
 
 }
 
+#todoList li:hover > .hide{
+    display: block;
+    cursor: pointer;
+}
+
+
 #todoList li{
     display: flex;
     align-items: center;
 }
+
+.hide{
+    margin-left: auto;
+    display: none;
+}
+
 
 #todoList p{
     margin: 0px;
@@ -122,6 +187,10 @@ body{
     display: flex;
 }
 
+.checked img{
+    opacity: 1;
+}
+
 
 .checked:hover{
     border:2px solid transparent;
@@ -134,14 +203,22 @@ body{
 /* Filters */
 
 #containerFilter{
-    background-color: hsl(0, 0%, 98%);
     padding: 8px;
     border-radius: 3px 3px 8px 8px;
-    box-shadow: 0 4px 8px 0 hsl(236, 33%, 92%), 0 6px 20px 0 hsl(236, 33%, 92%);
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
+}
+
+.FilterLight{
+    background-color: hsl(0, 0%, 98%);
+    box-shadow:  0 6px 20px 0 hsl(236, 33%, 92%);
+}
+
+.FilterDark{
+    background-color: hsl(235, 24%, 19%);
+    box-shadow:  0 6px 20px 0 black;
 }
 
 #containerFilter button, #containerFilter p{
@@ -179,17 +256,32 @@ body{
     font-size: 15px;
     color:hsl(236, 9%, 61%);
 }
+
 #footer{
     position:absolute;
     bottom:0;
     height:60px; 
 }
 
+.footerLight{
+    color:hsl(235, 24%, 19%);
+}
+
+.footerDark{
+    color:hsl(0, 0%, 98%);
+}
+
+
 @media (max-width: 1920px) {
 
    body{
     background-repeat: repeat-x;
    }
+
+   .bodyDark{
+    background-repeat: repeat-x;
+   }
+  
   
    #todoDiv{
         width: 700px;
