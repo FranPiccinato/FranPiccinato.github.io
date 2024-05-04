@@ -18,6 +18,11 @@ var containerList = document.querySelector('#containerList');
 var containerFilter = document.querySelector('#containerFilter');
 var attri = document.querySelector(".attribution");
 var li = document.querySelectorAll("li");
+var input = document.querySelector("input");
+var btnAc = document.querySelector("#btn-active");
+var btnAll = document.querySelector("#btn-all");
+var btnCom = document.querySelector("#btn-completed");
+var btnCl = document.querySelector("#btn-clear");
 
 function modeChange() {
     const img = icon.src;
@@ -50,6 +55,18 @@ function modeChange() {
             item.classList.add("darkLine");
             item.classList.remove("lightLine");
         });
+
+        input.classList.add("inputDark");
+        input.classList.remove("inputLight");
+
+        btnAc.classList.add("buttons-dark");
+        btnAc.classList.remove("buttons-light");
+        btnAll.classList.add("buttons-dark");
+        btnAll.classList.remove("buttons-light");
+        btnCom.classList.add("buttons-dark");
+        btnCom.classList.remove("buttons-light");
+        btnCl.classList.add("buttons-dark");
+        btnCl.classList.remove("buttons-light");
     } else {
         icon.src = 'images/icon-moon.svg';
         body.classList.remove("bodyDark");
@@ -75,6 +92,18 @@ function modeChange() {
             item.classList.add("lightLine");
             item.classList.remove("darkLine");
         });
+
+        input.classList.add("inputLight");
+        input.classList.remove("inputDark");
+
+        btnAc.classList.add("buttons-light");
+        btnAc.classList.remove("buttons-dark");
+        btnAll.classList.add("buttons-light");
+        btnAll.classList.remove("buttons-dark");
+        btnCom.classList.add("buttons-light");
+        btnCom.classList.remove("buttons-dark");
+        btnCl.classList.add("buttons-light");
+        btnCl.classList.remove("buttons-dark");
     }
 }
 

@@ -40,6 +40,7 @@ body{
     display: flex;
     display: -webkit-flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 #TODO{
@@ -48,6 +49,10 @@ body{
     letter-spacing: 15px;
     font-size: 40px;
     width: fit-content;
+}
+
+#btn-state{
+    height: fit-content;
 }
 
 /* New TODO */
@@ -70,6 +75,14 @@ body{
     background-color: transparent;
     border: none;
     padding-top: 2px;
+}
+
+.inputLight{
+    color: hsl(235, 19%, 35%);
+}
+
+.inputDark{
+    color:hsl(234, 39%, 85%);
 }
 
 #newTodo:focus{
@@ -230,7 +243,7 @@ body{
     box-shadow:  0 6px 20px 0 black;
 }
 
-#containerFilter button, #containerFilter p{
+#containerFilter p{
     font-size: 15px;
     color:hsl(236, 9%, 61%);
 }
@@ -247,8 +260,22 @@ body{
     margin-left: 80px;
 }
 
-#btn-clear:hover, #btn-all:hover, #btn-active:hover, #btn-completed:hover{
+.buttons-light{
+    font-size: 15px;
+    color:hsl(236, 9%, 61%);
+}
+
+.buttons-light:hover{
    color:hsl(235, 19%, 35%);
+}
+
+.buttons-dark{
+    font-size: 15px;
+    color:hsl(236, 9%, 61%);
+}
+
+.buttons-dark:hover{
+    color:hsl(236, 33%, 92%);
 }
 
 /* Buttons */
