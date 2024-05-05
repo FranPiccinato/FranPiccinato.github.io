@@ -281,6 +281,11 @@ body{
     color:hsl(236, 33%, 92%);
 }
 
+.buttons-blue{
+    font-size: 15px;
+    color: hsl(220, 98%, 61%);
+}
+
 /* Buttons */
 
 .clear{

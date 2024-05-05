@@ -112,35 +112,98 @@ buttonState.addEventListener('click', modeChange);
 
 var submit = document.getElementById("newTodo");
 var todoList = document.getElementById("todoList");
+var body = document.body;
+var nItems = document.querySelector("#nItems")
+var count = 0;
 
-submit.addEventListener("keydown", function (e) {
+body.addEventListener("keydown", function (e) {
 
     if (e.key === "Enter") {
         if (submit.value === '') {
             alert("Vacío");
         } else {
-            todoList.innerHTML += `
-            <li class="lightLine">
-            <div class="btn-check btn-checkLight"">
-              <img class="imgCheck" src="images/icon-check.svg">
-            </div>
-            ${submit.value}
-            <div id="cross" class="hide">
-              <img class="imgCross" src="images/icon-cross.svg">
-            </div>
-          </li>
-            `
-
+            count += 1;
+            if(count === 1){
+                nItems.textContent = "1 item";
+            }else{
+                nItems.textContent = `${count} items`;
+            }
+            switch(input.className){
+                case 'inputLight':
+                    todoList.innerHTML += `
+                    <li class="lightLine">
+                    <div class="btn-check btn-checkLight">
+                    <img class="imgCheck" src="images/icon-check.svg">
+                    </div>
+                    ${submit.value}
+                    <div id="cross" class="hide">
+                    <img class="imgCross" src="images/icon-cross.svg">
+                    </div>
+                    </li>
+                        `
+                        break;
+                case 'inputDark':
+                    todoList.innerHTML += `
+                    <li class="lightLine">
+                    <div class="btn-check btn-checkDark">
+                    <img class="imgCheck" src="images/icon-check.svg">
+                    </div>
+                    ${submit.value}
+                    <div id="cross" class="hide">
+                    <img class="imgCross" src="images/icon-cross.svg">
+                    </div>
+                    </li>
+                        `
+                        break;
+                case 'inputLight marked':
+                    todoList.innerHTML += `
+                    <li class="lightLine marked">
+                    <div class="btn-check btn-checkLight checked">
+                    <img class="imgCheck" src="images/icon-check.svg">
+                    </div>
+                    ${submit.value}
+                    <div id="cross" class="hide">
+                    <img class="imgCross" src="images/icon-cross.svg">
+                    </div>
+                    </li>
+                        `
+                        break;
+                case 'inputDark marked':
+                    todoList.innerHTML += `
+                    <li class="lightLine marked">
+                    <div class="btn-check btn-checkDark checked">
+                    <img class="imgCheck" src="images/icon-check.svg">
+                    </div>
+                    ${submit.value}
+                    <div id="cross" class="hide">
+                    <img class="imgCross" src="images/icon-cross.svg">
+                    </div>
+                    </li>
+                        `
+                        break;
+            }
             submit.value = "";
+            input.classList.remove('marked');
+            checked.classList.remove('checked')
         }
     }
 });
 
 var contList = document.querySelector("#containerList")
-contList.addEventListener("click", (e) =>{
-    if(e.target.className.match("btn-check")){
+contList.addEventListener("click", (e) => {
+    if (e.target.className.match("btn-check")) {
         e.target.classList.toggle("checked");
         e.target.parentElement.classList.toggle('marked');
+    }
+
+    if (e.target.className.match("imgCross")) {
+        e.target.parentElement.parentElement.remove();
+        count -= 1;
+        if(count === 1){
+            nItems.textContent = "1 item";
+        }else{
+            nItems.textContent = `${count} items`;
+        }
     }
 });
 
