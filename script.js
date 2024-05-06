@@ -1,7 +1,15 @@
 "use strict"
+var nItems = document.querySelector("#nItems");
+var count = 0;
 
 var checked = document.querySelector('.btn-check');
 var input = document.querySelector('#newTodo');
+
+
+var btnAc = document.querySelector("#btn-active");
+var btnAll = document.querySelector("#btn-all");
+var btnCom = document.querySelector("#btn-completed");
+var btnCl = document.querySelector("#btn-clear");
 
 checked.addEventListener('click', () => {
     checked.classList.toggle('checked');
@@ -109,26 +117,48 @@ function modeChange() {
 
 buttonState.addEventListener('click', modeChange);
 
+function filters(){
+    if (btnAll.className.match("buttons-blue")) {
+        var lis = document.querySelectorAll("li");
+        count = lis.length;
+
+        if (count === 1) {
+            nItems.textContent = "1 item";
+        } else {
+            nItems.textContent = `${count} items`;
+        }
+    } else if (btnAc.className.match("buttons-blue")) {
+        var lis = document.querySelectorAll("li:not(.marked)");
+        count = lis.length;
+
+        if (count === 1) {
+            nItems.textContent = "1 item";
+        } else {
+            nItems.textContent = `${count} items`;
+        }
+    } else if (btnCom.className.match("buttons-blue")) {
+        var lis = document.querySelectorAll("li.marked");
+        count = lis.length;
+
+        if (count === 1) {
+            nItems.textContent = "1 item";
+        } else {
+            nItems.textContent = `${count} items`;
+        }
+    }
+}
 
 var submit = document.getElementById("newTodo");
 var todoList = document.getElementById("todoList");
 var body = document.body;
-var nItems = document.querySelector("#nItems")
-var count = 0;
 
 body.addEventListener("keydown", function (e) {
 
     if (e.key === "Enter") {
-        if (submit.value === '') {
-            alert("Vacío");
+        if (submit.value.trim().length === 0) {
+            Swal.fire("SweetAlert2 is working!");
         } else {
-            count += 1;
-            if(count === 1){
-                nItems.textContent = "1 item";
-            }else{
-                nItems.textContent = `${count} items`;
-            }
-            switch(input.className){
+            switch (input.className) {
                 case 'inputLight':
                     todoList.innerHTML += `
                     <li class="lightLine">
@@ -141,7 +171,7 @@ body.addEventListener("keydown", function (e) {
                     </div>
                     </li>
                         `
-                        break;
+                    break;
                 case 'inputDark':
                     todoList.innerHTML += `
                     <li class="lightLine">
@@ -154,7 +184,7 @@ body.addEventListener("keydown", function (e) {
                     </div>
                     </li>
                         `
-                        break;
+                    break;
                 case 'inputLight marked':
                     todoList.innerHTML += `
                     <li class="lightLine marked">
@@ -167,7 +197,16 @@ body.addEventListener("keydown", function (e) {
                     </div>
                     </li>
                         `
-                        break;
+
+                    if (btnAc.className.match("buttons-blue")) {
+                        var li = document.querySelectorAll("li");
+                        li.forEach(e => {
+                            if (e.className.match("marked")) {
+                                e.classList.add("hideTodo");
+                            }
+                        })
+                    }
+                    break;
                 case 'inputDark marked':
                     todoList.innerHTML += `
                     <li class="lightLine marked">
@@ -180,28 +219,147 @@ body.addEventListener("keydown", function (e) {
                     </div>
                     </li>
                         `
-                        break;
+
+                    if (btnAc.className.match("buttons-blue")) {
+                        var li = document.querySelectorAll("li");
+                        li.forEach(e => {
+                            if (e.className.match("marked")) {
+                                e.classList.add("hideTodo");
+                            }
+                        })
+                    }
+                    break;
             }
             submit.value = "";
             input.classList.remove('marked');
             checked.classList.remove('checked')
         }
+        filters();
     }
 });
 
 var contList = document.querySelector("#containerList")
+
 contList.addEventListener("click", (e) => {
     if (e.target.className.match("btn-check")) {
         e.target.classList.toggle("checked");
         e.target.parentElement.classList.toggle('marked');
+
+        if (btnAc.className.match("buttons-blue")) {
+            var li = document.querySelectorAll("li");
+            li.forEach(e => {
+                if (e.className.match("marked")) {
+                    e.classList.add("hideTodo");
+                }
+            })
+        }
+
+        
+        if (btnCom.className.match("buttons-blue")) {
+            var li = document.querySelectorAll("li");
+            li.forEach(e => {
+                if (!e.className.match("marked")) {
+                    e.classList.add("hideTodo");
+                }
+            })
+        }
     }
 
     if (e.target.className.match("imgCross")) {
         e.target.parentElement.parentElement.remove();
-        count -= 1;
-        if(count === 1){
+       filters();
+    }
+    filters();
+    
+});
+
+
+btnAc.addEventListener("click", () => {
+    var li = document.querySelectorAll("li");
+    li.forEach(e => {
+        e.classList.remove("hideTodo");
+    })
+    btnAc.classList.add("buttons-blue");
+    btnAll.classList.remove("buttons-blue");
+    btnCom.classList.remove("buttons-blue");
+
+    li.forEach(e => {
+        if (e.className.match("marked")) {
+            e.classList.add("hideTodo");
+        }
+    });
+    var lis = document.querySelectorAll("li:not(.marked)");
+    count = lis.length;
+
+    if (count === 1) {
+        nItems.textContent = "1 item";
+    } else {
+        nItems.textContent = `${count} items`;
+    }
+});
+
+btnAll.addEventListener("click", () => {
+    var li = document.querySelectorAll("li");
+    btnAll.classList.add("buttons-blue");
+    btnAc.classList.remove("buttons-blue");
+    btnCom.classList.remove("buttons-blue");
+
+    li.forEach(e => {
+        e.classList.remove("hideTodo");
+    })
+    var lis = document.querySelectorAll("li");
+    count = lis.length;
+
+    if (count === 1) {
+        nItems.textContent = "1 item";
+    } else {
+        nItems.textContent = `${count} items`;
+    }
+});
+
+btnCom.addEventListener("click", () => {
+    var li = document.querySelectorAll("li");
+    li.forEach(e => {
+        e.classList.remove("hideTodo");
+    })
+    btnCom.classList.add("buttons-blue");
+    btnAll.classList.remove("buttons-blue");
+    btnAc.classList.remove("buttons-blue");
+
+    li.forEach(e => {
+        if (!e.className.match("marked")) {
+            e.classList.add("hideTodo");
+        }
+    })
+
+    var lis = document.querySelectorAll("li.marked");
+    count = lis.length;
+
+    if (count === 1) {
+        nItems.textContent = "1 item";
+    } else {
+        nItems.textContent = `${count} items`;
+    }
+});
+
+btnCl.addEventListener("click", (e) => {
+    var li = document.querySelectorAll("li");
+
+    li.forEach(e => {
+        if (e.className.match("marked")) {
+            e.remove();
+        }
+    })
+    if (btnCom.className.match("buttons-blue")) {
+        nItems.textContent = "0 items";
+    }
+    else if (btnAll.className.match("buttons-blue")) {
+        var lis = document.querySelectorAll("li");
+        count = lis.length;
+
+        if (count === 1) {
             nItems.textContent = "1 item";
-        }else{
+        } else {
             nItems.textContent = `${count} items`;
         }
     }

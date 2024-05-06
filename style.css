@@ -225,6 +225,11 @@ body{
       linear-gradient( hsl(192, 100%, 67%) ,hsl(280, 87%, 65%)) border-box;
 }
 
+
+.hideTodo{
+    display: none !important;
+}
+
 /* Filters */
 
 #containerFilter{
@@ -315,7 +320,22 @@ body{
     color:hsl(0, 0%, 98%);
 }
 
+@media (max-width: 2560px) {
 
+    body{
+     background-repeat: repeat-x;
+    }
+ 
+    .bodyDark{
+     background-repeat: repeat-x;
+    }
+   
+   
+    #todoDiv{
+         width: 700px;
+     }
+ 
+ }
 @media (max-width: 1920px) {
 
    body{
