@@ -117,7 +117,7 @@ function modeChange() {
 
 buttonState.addEventListener('click', modeChange);
 
-function filters(){
+function filters() {
     if (btnAll.className.match("buttons-blue")) {
         var lis = document.querySelectorAll("li");
         count = lis.length;
@@ -161,7 +161,7 @@ body.addEventListener("keydown", function (e) {
             switch (input.className) {
                 case 'inputLight':
                     todoList.innerHTML += `
-                    <li class="lightLine">
+                    <li class="lightLine" draggable="true">
                     <div class="btn-check btn-checkLight">
                     <img class="imgCheck" src="images/icon-check.svg">
                     </div>
@@ -174,7 +174,7 @@ body.addEventListener("keydown", function (e) {
                     break;
                 case 'inputDark':
                     todoList.innerHTML += `
-                    <li class="lightLine">
+                    <li class="lightLine" draggable="true">
                     <div class="btn-check btn-checkDark">
                     <img class="imgCheck" src="images/icon-check.svg">
                     </div>
@@ -187,7 +187,7 @@ body.addEventListener("keydown", function (e) {
                     break;
                 case 'inputLight marked':
                     todoList.innerHTML += `
-                    <li class="lightLine marked">
+                    <li class="lightLine marked" draggable="true">
                     <div class="btn-check btn-checkLight checked">
                     <img class="imgCheck" src="images/icon-check.svg">
                     </div>
@@ -209,7 +209,7 @@ body.addEventListener("keydown", function (e) {
                     break;
                 case 'inputDark marked':
                     todoList.innerHTML += `
-                    <li class="lightLine marked">
+                    <li class="lightLine marked" draggable="true">
                     <div class="btn-check btn-checkDark checked">
                     <img class="imgCheck" src="images/icon-check.svg">
                     </div>
@@ -254,7 +254,7 @@ contList.addEventListener("click", (e) => {
             })
         }
 
-        
+
         if (btnCom.className.match("buttons-blue")) {
             var li = document.querySelectorAll("li");
             li.forEach(e => {
@@ -267,10 +267,10 @@ contList.addEventListener("click", (e) => {
 
     if (e.target.className.match("imgCross")) {
         e.target.parentElement.parentElement.remove();
-       filters();
+        filters();
     }
     filters();
-    
+
 });
 
 
@@ -365,3 +365,51 @@ btnCl.addEventListener("click", (e) => {
     }
 });
 
+const todoCont = document.querySelector("ul");
+let li = null;
+
+
+todoCont.addEventListener("dragstart", (e) => {
+    li = e.target;
+});
+
+todoCont.addEventListener("dragend", (e) => {
+    li = null;
+});
+
+todoCont.addEventListener("dragover", (e) => {
+
+    const afterElement = getDragAfterElement(todoCont, e.clientY);
+    if (afterElement == null) {
+        todoCont.appendChild(
+            li
+        );
+    }
+    else {
+        todoCont.insertBefore(
+            li,
+            afterElement
+        );
+    }
+});
+const getDragAfterElement = (container, y) => {
+    const draggableElements = [...container.querySelectorAll("li:not(.dragging)"),];
+
+    return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+            return {
+                offset: offset,
+                element: child,
+            };
+        }
+        else {
+            return closest;
+        }
+    },
+        {
+            offset: Number.NEGATIVE_INFINITY,
+        }
+    ).element;
+};
