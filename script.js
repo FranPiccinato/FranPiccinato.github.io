@@ -156,7 +156,7 @@ body.addEventListener("keydown", function (e) {
 
     if (e.key === "Enter") {
         if (submit.value.trim().length === 0) {
-            Swal.fire("SweetAlert2 is working!");
+            alert("Empty");
         } else {
             switch (input.className) {
                 case 'inputLight':
