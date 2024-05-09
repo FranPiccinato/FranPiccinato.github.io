@@ -161,7 +161,6 @@ function modeChange() {
 
     if (imageName == 'moon') {
         setCookie("theme", imageName , 365);
-        console.log(document.cookie);
         icon.src = 'images/icon-sun.svg';
 
         body.classList.add("bodyDark");
@@ -201,7 +200,6 @@ function modeChange() {
         btnCl.classList.remove("buttons-light");
     } else {
         setCookie("theme", imageName , 365);
-        console.log(document.cookie);
 
         icon.src = 'images/icon-moon.svg';
         body.classList.remove("bodyDark");
