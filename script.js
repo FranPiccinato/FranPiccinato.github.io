@@ -1,4 +1,5 @@
 "use strict"
+import {supabase} from '/client.js'
 
 function setCookie(cname, value, days){
     const date = new Date();

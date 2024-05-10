@@ -1,6 +1,10 @@
 {
   "dependencies": {
-    "@kernex/client": "^1.0.1",
-    "type": "module"
+    "@supabase/supabase-js": "^2.43.1",
+    "dotenv": "^16.4.5"
+  },
+  "type": "module",
+  "scripts": {
+    "start": "node client.js"
   }
 }
