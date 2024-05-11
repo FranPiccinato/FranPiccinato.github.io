@@ -1,6 +1,12 @@
 "use strict"
+const db = firebase.firestore();
 
-function setCookie(cname, value, days){
+let todoRef;
+let unsubscribe;
+
+todoRef = db.collection('TodoList');
+
+function setCookie(cname, value, days) {
     const date = new Date();
     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
     let expires = "expires=" + date.toUTCString();
@@ -8,36 +14,55 @@ function setCookie(cname, value, days){
 
 }
 
-function deleteCookie(cname){
+function deleteCookie(cname) {
     setCookie(cname, null, null);
 }
 
-function getCookie(cname){
+function getCookie(cname) {
     const cDecoded = decodeURIComponent(document.cookie);
     const cArray = cDecoded.split("; ");
     let result = null;
 
-    cArray.forEach(e =>{
-        if(e.indexOf(cname) == 0){
+    cArray.forEach(e => {
+        if (e.indexOf(cname) == 0) {
             result = e.substring(cname.length + 1);
         }
     })
 
     return result;
 }
-
-setTheme(getCookie("theme"));
 var nItems = document.querySelector("#nItems");
 var count = 0;
-
-var checked = document.querySelector('.btn-check');
 var input = document.querySelector('#newTodo');
-
-
+var submit = document.getElementById("newTodo");
+var todoList = document.getElementById("todoList");
+var body = document.body;
 var btnAc = document.querySelector("#btn-active");
 var btnAll = document.querySelector("#btn-all");
 var btnCom = document.querySelector("#btn-completed");
 var btnCl = document.querySelector("#btn-clear");
+
+setTheme(getCookie("theme"));
+newUuid();
+loadValues();
+filters();
+
+function uuidv4() {
+    return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+        (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
+    );
+}
+
+
+function newUuid() {
+    if (getCookie("uuidv4") == null) {
+        setCookie("uuidv4", uuidv4(), 365);
+    }
+}
+
+
+var checked = document.querySelector('.btn-check');
+
 
 checked.addEventListener('click', () => {
     checked.classList.toggle('checked');
@@ -160,7 +185,7 @@ function modeChange() {
     var btnCh = document.querySelectorAll('.btn-check');
 
     if (imageName == 'moon') {
-        setCookie("theme", imageName , 365);
+        setCookie("theme", imageName, 365);
         icon.src = 'images/icon-sun.svg';
 
         body.classList.add("bodyDark");
@@ -199,7 +224,7 @@ function modeChange() {
         btnCl.classList.add("buttons-dark");
         btnCl.classList.remove("buttons-light");
     } else {
-        setCookie("theme", imageName , 365);
+        setCookie("theme", imageName, 365);
 
         icon.src = 'images/icon-moon.svg';
         body.classList.remove("bodyDark");
@@ -273,9 +298,6 @@ function filters() {
     }
 }
 
-var submit = document.getElementById("newTodo");
-var todoList = document.getElementById("todoList");
-var body = document.body;
 
 body.addEventListener("keydown", function (e) {
 
@@ -283,92 +305,138 @@ body.addEventListener("keydown", function (e) {
         if (submit.value.trim().length === 0) {
             alert("Empty");
         } else {
-            switch (input.className) {
-                case 'inputLight':
-                    todoList.innerHTML += `
-                    <li class="lightLine" draggable="true">
-                    <div class="btn-check btn-checkLight">
-                    <img class="imgCheck" src="images/icon-check.svg">
-                    </div>
-                    ${submit.value}
-                    <div id="cross" class="hide">
-                    <img class="imgCross" src="images/icon-cross.svg">
-                    </div>
-                    </li>
-                        `
-                    break;
-                case 'inputDark':
-                    todoList.innerHTML += `
-                    <li class="lightLine" draggable="true">
-                    <div class="btn-check btn-checkDark">
-                    <img class="imgCheck" src="images/icon-check.svg">
-                    </div>
-                    ${submit.value}
-                    <div id="cross" class="hide">
-                    <img class="imgCross" src="images/icon-cross.svg">
-                    </div>
-                    </li>
-                        `
-                    break;
-                case 'inputLight marked':
-                    todoList.innerHTML += `
-                    <li class="lightLine marked" draggable="true">
-                    <div class="btn-check btn-checkLight checked">
-                    <img class="imgCheck" src="images/icon-check.svg">
-                    </div>
-                    ${submit.value}
-                    <div id="cross" class="hide">
-                    <img class="imgCross" src="images/icon-cross.svg">
-                    </div>
-                    </li>
-                        `
-
-                    if (btnAc.className.match("buttons-blue")) {
-                        var li = document.querySelectorAll("li");
-                        li.forEach(e => {
-                            if (e.className.match("marked")) {
-                                e.classList.add("hideTodo");
-                            }
-                        })
-                    }
-                    break;
-                case 'inputDark marked':
-                    todoList.innerHTML += `
-                    <li class="lightLine marked" draggable="true">
-                    <div class="btn-check btn-checkDark checked">
-                    <img class="imgCheck" src="images/icon-check.svg">
-                    </div>
-                    ${submit.value}
-                    <div id="cross" class="hide">
-                    <img class="imgCross" src="images/icon-cross.svg">
-                    </div>
-                    </li>
-                        `
-
-                    if (btnAc.className.match("buttons-blue")) {
-                        var li = document.querySelectorAll("li");
-                        li.forEach(e => {
-                            if (e.className.match("marked")) {
-                                e.classList.add("hideTodo");
-                            }
-                        })
-                    }
-                    break;
+            let statem = "unmarked";
+            if(submit.classList.item(1) != null){
+                statem = "marked";
             }
+            const { serverTimestamp } = firebase.firestore.FieldValue;
+            todoRef.add({
+                uid: getCookie("uuidv4"),
+                task: submit.value,
+                createdAt: serverTimestamp(),
+                state: statem,
+                id: uuidv4()
+                
+
+            });
             submit.value = "";
             input.classList.remove('marked');
-            checked.classList.remove('checked')
+            checked.classList.remove('checked');
         }
         filters();
     }
 });
 
+function loadValues() {
+    
+    unsubscribe = todoRef
+        .where("uid", '==', getCookie("uuidv4"))
+        .orderBy("createdAt")
+        .onSnapshot(querySnapshot => {
+            const items = querySnapshot.docs.map(doc => {
+                return [doc.data().task, doc.data().state, doc.data().id]
+            });
+            if (items.length === 1) {
+                nItems.textContent = "1 item";
+            } else {
+                nItems.textContent = `${items.length} items`;
+            }
+            todoList.innerHTML = "";
+            items.forEach(item => {
+                if(item[1] == "marked"){
+                    input.classList.add("marked");
+                }
+                switch (input.className) {
+                    case 'inputLight':
+                        todoList.innerHTML += `
+                        <li class="lightLine" draggable="true" id="${item[2]}">
+                        <div class="btn-check btn-checkLight">
+                        <img class="imgCheck" src="images/icon-check.svg">
+                        </div>
+                        ${item[0]}
+                        <div id="cross" class="hide">
+                        <img class="imgCross" src="images/icon-cross.svg">
+                        </div>
+                        </li>
+                            `
+                        break;
+                    case 'inputDark':
+                        todoList.innerHTML += `
+                        <li class="lightLine" draggable="true" id="${item[2]}">
+                        <div class="btn-check btn-checkDark">
+                        <img class="imgCheck" src="images/icon-check.svg">
+                        </div>
+                        ${item[0]}
+                        <div id="cross" class="hide">
+                        <img class="imgCross" src="images/icon-cross.svg">
+                        </div>
+                        </li>
+                            `
+                        break;
+                    case 'inputLight marked':
+                        todoList.innerHTML += `
+                        <li class="lightLine marked" draggable="true" id="${item[2]}">
+                        <div class="btn-check btn-checkLight checked">
+                        <img class="imgCheck" src="images/icon-check.svg">
+                        </div>
+                        ${item[0]}
+                        <div id="cross" class="hide">
+                        <img class="imgCross" src="images/icon-cross.svg">
+                        </div>
+                        </li>
+                            `
+
+                        if (btnAc.className.match("buttons-blue")) {
+                            var li = document.querySelectorAll("li");
+                            li.forEach(e => {
+                                if (e.className.match("marked")) {
+                                    e.classList.add("hideTodo");
+                                }
+                            })
+                        }
+                        break;
+                    case 'inputDark marked':
+                        todoList.innerHTML += `
+                        <li class="lightLine marked" draggable="true" id="${item[2]}">
+                        <div class="btn-check btn-checkDark checked">
+                        <img class="imgCheck" src="images/icon-check.svg">
+                        </div>
+                        ${item[0]}
+                        <div id="cross" class="hide">
+                        <img class="imgCross" src="images/icon-cross.svg">
+                        </div>
+                        </li>
+                            `
+
+                        if (btnAc.className.match("buttons-blue")) {
+                            var li = document.querySelectorAll("li");
+                            li.forEach(e => {
+                                if (e.className.match("marked")) {
+                                    e.classList.add("hideTodo");
+                                }
+                            })
+                        }
+                        break;
+                }
+                input.classList.remove("marked")
+
+            });
+        });
+};
 var contList = document.querySelector("#containerList")
 
 contList.addEventListener("click", (e) => {
     if (e.target.className.match("btn-check")) {
         e.target.classList.toggle("checked");
         e.target.parentElement.classList.toggle('marked');
+        
+        let name = e.target.parentElement.innerText;
+        let updateState = e.target.parentElement.classList.item(1);
+        if(e.target.parentElement.classList.item(1) != null){
+            updateItem(name, updateState);
+        }else{
+            updateItem(name, "unmarked");
+        }
 
         if (btnAc.className.match("buttons-blue")) {
             var li = document.querySelectorAll("li");
@@ -391,12 +459,40 @@ contList.addEventListener("click", (e) => {
     }
 
     if (e.target.className.match("imgCross")) {
+        const delItem = e.target.parentElement.parentElement.innerText;
+        const delId = e.target.parentElement.parentElement.id;
         e.target.parentElement.parentElement.remove();
+        deleteItem(delItem, delId);
         filters();
+        
     }
     filters();
 
 });
+
+
+async function deleteItem(item, id){
+   const docId = await todoRef
+    .where('task', '==', item)
+    .where('uid', '==', getCookie("uuidv4"))
+    .where('id', '==', id)
+    .get();
+    docId.forEach(element => {
+        element.ref.delete();
+    });
+
+}
+
+async function updateItem(item, nState){
+    const docId = await todoRef
+     .where('task', '==', item)
+     .where('uid', '==', getCookie("uuidv4"))
+     .get();
+     docId.forEach(element => {
+         element.ref.update({state: nState});
+     });
+ 
+ }
 
 
 btnAc.addEventListener("click", () => {
@@ -472,6 +568,7 @@ btnCl.addEventListener("click", (e) => {
 
     li.forEach(e => {
         if (e.className.match("marked")) {
+            deleteItem(e.innerText, e.id);
             e.remove();
         }
     })
