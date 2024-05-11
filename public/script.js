@@ -432,10 +432,12 @@ contList.addEventListener("click", (e) => {
         
         let name = e.target.parentElement.innerText;
         let updateState = e.target.parentElement.classList.item(1);
+        let idUpdate = e.target.parentElement.id;
+
         if(e.target.parentElement.classList.item(1) != null){
-            updateItem(name, updateState);
+            updateItem(name, updateState, idUpdate);
         }else{
-            updateItem(name, "unmarked");
+            updateItem(name, "unmarked", idUpdate);
         }
 
         if (btnAc.className.match("buttons-blue")) {
@@ -483,10 +485,11 @@ async function deleteItem(item, id){
 
 }
 
-async function updateItem(item, nState){
+async function updateItem(item, nState, id){
     const docId = await todoRef
      .where('task', '==', item)
      .where('uid', '==', getCookie("uuidv4"))
+     .where('id', '==', id)
      .get();
      docId.forEach(element => {
          element.ref.update({state: nState});
